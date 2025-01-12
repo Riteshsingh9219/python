@@ -1,0 +1,19 @@
+def next_greater_element(arr):
+    n = len(arr)
+    nge = [-1] * n  
+    stack = []  
+
+    for i in range(n):
+        while stack and arr[i] > arr[stack[-1]]:
+            index = stack.pop()
+            nge[index] = arr[i]
+        stack.append(i)
+
+    return nge
+
+# Main program
+if __name__ == "__main__":
+    arr = [4, 5, 2, 10, 8]
+    print("Input Array:", arr)
+    result = next_greater_element(arr)
+    print("Next Greater Element for each index:", result)
