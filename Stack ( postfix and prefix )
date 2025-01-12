@@ -1,0 +1,54 @@
+class Stack:
+    def __init__(self):
+        self.stack = []
+
+    def push(self, value):
+        self.stack.append(value)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.stack.pop()
+        else:
+            raise Exception("Stack underflow: Cannot pop from an empty stack.")
+
+    def is_empty(self):
+        return len(self.stack) == 0
+
+    def top(self):
+        if not self.is_empty():
+            return self.stack[-1]
+        else:
+            return None
+
+def evaluate_postfix(expression):
+    stack = Stack()
+    operators = {'+', '-', '*', '/'}
+    
+    for char in expression:
+        if char.isdigit():  # If the character is an operand
+            stack.push(int(char))
+        elif char in operators:  # If the character is an operator
+            if stack.is_empty():
+                raise Exception("Invalid expression: Not enough operands.")
+            operand2 = stack.pop()
+            if stack.is_empty():
+                raise Exception("Invalid expression: Not enough operands.")
+            operand1 = stack.pop()
+            
+            if char == '+':
+                stack.push(operand1 + operand2)
+            elif char == '-':
+                stack.push(operand1 - operand2)
+            elif char == '*':
+                stack.push(operand1 * operand2)
+            elif char == '/':
+                stack.push(int(operand1 / operand2))  # Integer division
+            
+    if stack.is_empty():
+        raise Exception("Invalid expression: Stack is empty after evaluation.")
+    
+    result = stack.pop()
+    if not stack.is_empty():
+        raise Exception("Invalid expression: Stack is not empty after evaluation.")
+    
+    return result
