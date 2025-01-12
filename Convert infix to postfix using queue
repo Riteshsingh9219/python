@@ -1,0 +1,52 @@
+from collections import deque
+
+class ShuntingYard:
+    def __init__(self):
+        self.operators = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+        self.output_queue = deque()  # Queue to store postfix expression
+        self.operator_stack = []    # Stack to store operators
+
+    def precedence(self, op):
+        return self.operators.get(op, 0)
+
+    def is_operator(self, token):
+        return token in self.operators
+
+    def infix_to_postfix(self, expression):
+        tokens = expression.split()
+        for token in tokens:
+            if token.isdigit() or token.isalpha():  # Operand
+                self.output_queue.append(token)
+            elif token == '(':  # Left parenthesis
+                self.operator_stack.append(token)
+            elif token == ')':  # Right parenthesis
+                while self.operator_stack and self.operator_stack[-1] != '(':
+                    self.output_queue.append(self.operator_stack.pop())
+                if not self.operator_stack:
+                    raise ValueError("Mismatched parentheses in the expression.")
+                self.operator_stack.pop()  # Pop the '('
+            elif self.is_operator(token):  # Operator
+                while (self.operator_stack and
+                       self.operator_stack[-1] != '(' and
+                       self.precedence(token) <= self.precedence(self.operator_stack[-1])):
+                    self.output_queue.append(self.operator_stack.pop())
+                self.operator_stack.append(token)
+
+        # Pop remaining operators
+        while self.operator_stack:
+            if self.operator_stack[-1] == '(':
+                raise ValueError("Mismatched parentheses in the expression.")
+            self.output_queue.append(self.operator_stack.pop())
+
+        return ' '.join(self.output_queue)
+
+# Main program
+if __name__ == "__main__":
+    infix_expression = "3 + 5 * ( 2 - 8 )"
+    sy = ShuntingYard()
+    try:
+        postfix_expression = sy.infix_to_postfix(infix_expression)
+        print(f"Infix Expression: {infix_expression}")
+        print(f"Postfix Expression: {postfix_expression}")
+    except ValueError as e:
+        print(f"Error: {e}")
