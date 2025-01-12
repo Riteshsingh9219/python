@@ -1,0 +1,56 @@
+class MinStack:
+    def __init__(self, capacity):
+        self.stack = []
+        self.min_stack = []
+        self.capacity = capacity
+
+    def push(self, value):
+        if len(self.stack) >= self.capacity:
+            print("Overflow: Cannot push, stack is full.")
+            return
+        self.stack.append(value)
+        if not self.min_stack or value <= self.min_stack[-1]:
+            self.min_stack.append(value)
+
+    def pop(self):
+        if not self.stack:
+            print("Underflow: Cannot pop, stack is empty.")
+            return None
+        removed = self.stack.pop()
+        if removed == self.min_stack[-1]:
+            self.min_stack.pop()
+        return removed
+
+    def display(self):
+        if not self.stack:
+            print("Stack is empty.")
+            return
+        print("Stack elements:", self.stack)
+
+    def top(self):
+        if not self.stack:
+            print("Stack is empty.")
+            return None
+        return self.stack[-1]
+
+    def get_min(self):
+        if not self.min_stack:
+            print("Stack is empty.")
+            return None
+        return self.min_stack[-1]
+
+if __name__ == "__main__":
+    min_stack = MinStack(5)
+    min_stack.push(10)
+    min_stack.push(20)
+    min_stack.push(5)
+    min_stack.push(15)
+    min_stack.push(5)
+    min_stack.push(30)
+    min_stack.display()
+    print("Minimum element:", min_stack.get_min())
+    print("Popped:", min_stack.pop())
+    print("Popped:", min_stack.pop())
+    min_stack.display()
+    print("Minimum element:", min_stack.get_min())
+    print("Top element:", min_stack.top())
