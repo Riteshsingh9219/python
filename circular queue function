@@ -1,0 +1,82 @@
+class CircularQueue:
+    def __init__(self, k):
+        self.queue = [None] * k
+        self.max_size = k
+        self.front = -1
+        self.rear = -1
+
+    def enqueue(self, value):
+        if (self.rear + 1) % self.max_size == self.front:
+            print("Queue is full. Cannot enqueue.")
+            return
+        if self.front == -1:  # First element
+            self.front = 0
+        self.rear = (self.rear + 1) % self.max_size
+        self.queue[self.rear] = value
+        print(f"Enqueued {value}.")
+
+    def dequeue(self):
+        if self.front == -1:
+            print("Queue is empty. Cannot dequeue.")
+            return None
+        value = self.queue[self.front]
+        if self.front == self.rear:  # Only one element left
+            self.front = -1
+            self.rear = -1
+        else:
+            self.front = (self.front + 1) % self.max_size
+        print(f"Dequeued {value}.")
+        return value
+
+    def front_element(self):
+        if self.front == -1:
+            print("Queue is empty. No front element.")
+            return None
+        return self.queue[self.front]
+
+    def rear_element(self):
+        if self.rear == -1:
+            print("Queue is empty. No rear element.")
+            return None
+        return self.queue[self.rear]
+
+    def display(self):
+        if self.front == -1:
+            print("Queue is empty.")
+            return
+        print("Queue elements:", end=" ")
+        i = self.front
+        while True:
+            print(self.queue[i], end=" ")
+            if i == self.rear:
+                break
+            i = (i + 1) % self.max_size
+        print()
+
+if __name__ == "__main__":
+    k = 5  
+    cq = CircularQueue(k)
+
+    cq.enqueue(10)
+    cq.enqueue(20)
+    cq.enqueue(30)
+    cq.enqueue(40)
+    cq.enqueue(50)
+    cq.display()
+
+    print("Front element:", cq.front_element())
+    print("Rear element:", cq.rear_element())
+
+    cq.dequeue()
+    cq.dequeue()
+    cq.display()
+
+    print("Front element:", cq.front_element())
+    print("Rear element:", cq.rear_element())
+
+    cq.enqueue(60)
+    cq.enqueue(70)
+    cq.display()
+
+    print("Front element:", cq.front_element())
+    print("Rear element:", cq.rear_element())
