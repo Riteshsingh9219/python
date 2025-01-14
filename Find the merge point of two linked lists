@@ -1,0 +1,49 @@
+ class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class FindMergePoint {
+    public static Node findMergePoint(Node head1, Node head2) {
+        if (head1 == null || head2 == null) return null;
+
+        Node pointer1 = head1;
+        Node pointer2 = head2;
+
+        while (pointer1 != pointer2) {
+            pointer1 = (pointer1 == null) ? head2 : pointer1.next;
+            pointer2 = (pointer2 == null) ? head1 : pointer2.next;
+        }
+
+        return pointer1;
+    }
+
+    public static void main(String[] args) {
+        Node head1 = new Node(1);
+        head1.next = new Node(2);
+        head1.next.next = new Node(3);
+
+        Node head2 = new Node(6);
+        head2.next = new Node(7);
+
+        Node common = new Node(8);
+        common.next = new Node(9);
+        common.next.next = new Node(10);
+
+        head1.next.next.next = common;
+        head2.next.next = common;
+
+        Node mergePoint = findMergePoint(head1, head2);
+
+        if (mergePoint != null) {
+            System.out.println("Merge point is at node with data: " + mergePoint.data);
+        } else {
+            System.out.println("No merge point found.");
+        }
+    }
+}
