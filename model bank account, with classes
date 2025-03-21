@@ -1,0 +1,20 @@
+class Bank: 
+    def _init_(self, add, name): 
+        self.add = add 
+        self.name = name 
+    def show(self): 
+        print(f"Add: {self.add}") 
+        print(f"Name: {self.name}") 
+class Account(Bank):   
+    def display(self, no): 
+        self.no = no 
+        print(f"Number: {self.no}") 
+class Cust(Bank): 
+    def get(self, cust_id): 
+        self.cust_id = cust_id 
+        print(f"Customer ID: {self.cust_id}") 
+s2 = Account(1, "Raj")   
+s2.show()   
+s2.display(45845) 
+s3 = Cust(1, "Raj")   
+s3.get(77685224)
