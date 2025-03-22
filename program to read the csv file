@@ -1,0 +1,33 @@
+import csv # Import the CSV module for reading CSV files 
+ 
+#Function to safely convert a value to float 
+def convert_to_float(value): 
+    try: 
+        # Attempt to convert the value to a float 
+        return float(value) 
+    except ValueError: 
+         # Return None if conversion fails (e.g., for non-numeric values) 
+        return None 
+ 
+# Open the CSV file in read mode 
+with open("Batch1.csv", "r") as file: 
+    csv_reader = csv.reader(file) # Create a CSV reader object 
+ 
+    next(csv_reader, None)  # Skip the header row (if any) 
+ 
+     # Iterate through each row in the CSV 
+    for row in csv_reader: 
+        values = [] 
+ 
+        # Loop through each value in the row and convert it to float 
+        for value in row: 
+            convert_value = convert_to_float(value) 
+ 
+            if convert_value is not None: 
+                values.append(convert_value) 
+ 
+        # After processing the entire row, calculate the average 
+        if values:  # Only calculate if there are valid numbers 
+            row_average = sum(values) / len(values) 
+             # Print the original row and its average 
+            print(f"Row {row} Average : {row_average}") 
