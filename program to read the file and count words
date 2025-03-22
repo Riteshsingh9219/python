@@ -1,0 +1,18 @@
+# Initialize a counter to store the total number of words 
+count = 0 
+ 
+# Open the file in read mode (change the file path as per your file location) 
+f = open("C:\\Users\\Sachin Prasad\\Desktop\\Python_Class\\Date\\Sachin.txt", "r") 
+ 
+# Iterate through each line in the file 
+for line in f: 
+    # Split the line into words using space as the delimiter 
+    word = line.split() 
+    # Add the number of words in the current line to the total count 
+    count += len(word) 
+ 
+# Print the total word count 
+print("Total Number of Words: " + str(count)) 
+ 
+# Close the file to free system resources 
+f.close()
