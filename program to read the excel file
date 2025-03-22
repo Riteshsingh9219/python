@@ -1,0 +1,21 @@
+import pandas as pd  # Import the pandas library for handling Excel files 
+ 
+# Function to read and display Excel data in tabular format 
+def read_excel_and_display(file_path): 
+    try: 
+        # Read the Excel file into a DataFrame 
+        df = pd.read_excel(file_path) 
+ 
+        # Display the data in a tabular format 
+        print("Data from the Excel file:") 
+        print(df.to_string(index=False))  # Print the DataFrame without the index column 
+    except FileNotFoundError: 
+        print(f"Error: File not found at '{file_path}'. Please check the path and try again.") 
+    except Exception as e: 
+        print(f"An error occurred: {e}") 
+ 
+# Specify the path to the Excel file 
+file_path = "C:\\Users\\Sachin Prasad\\Desktop\\Python_Class\\LabPracticle\\Batch1.xlsx" 
+ 
+# Call the function to read and display the Excel file 
+read_excel_and_display(file_path)
